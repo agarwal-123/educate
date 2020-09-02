@@ -1,0 +1,59 @@
+//Dhruva
+// IIITU18331
+//Example of hybrid Inheritence
+//Salary Calculation of employee
+#include<bits/stdc++.h>
+using namespace std;
+class employee
+{
+	public:
+		int id;
+		student()
+		{
+			cout<<"Enter id: ";
+			cin>>rollno;
+		}
+};
+class overtime  
+{      
+	public:
+		int otime;
+		sports()
+		{
+			cout<<"Enter overtime :";
+			cin>>otime;
+		}
+};
+class regular : public employee
+{
+
+	public:
+		int rtime;
+		test()
+		{
+			cout<<"Enter regular hours "<<id<<" :";
+			cin>>rtime;
+		}
+};
+class salary : public regular , public overtime
+{
+	
+	public:
+		int res;
+	    result()
+		{
+			res= rtime*200 + otime*300 ;
+		}
+		void output()
+		{
+			cout<<"Calculated Salary for , "<<id<<" : "<<res<<"%";
+		}
+};
+int main()
+{
+	result r;
+	r.output();
+}
+
+
+
