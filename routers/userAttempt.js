@@ -28,9 +28,14 @@ router.get('/getquestion',async(req,res)=>{
       const tup2 = await userattempt.find({user:user});
       console.log(tup1,tup2);
       
-      var attemptedIds=tup2[0].attempt.filter((obj)=>{
-            return obj.sub===sub;
-      });
+      var attemptedIds=[];
+
+
+      if(tup2.length!=0){
+            attemptedIds=tup2[0].attempt.filter((obj)=>{
+                  return obj.sub===sub;
+            });
+      }
       console.log(attemptedIds);
 
       var result=[];
