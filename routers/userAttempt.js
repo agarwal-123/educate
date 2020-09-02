@@ -18,7 +18,7 @@ router.post('/addquestion',async(req,res)=>{
       res.send(itm);
 })
 
-router.get('/getquestion',async(req,res)=>{
+router.post('/getquestion',async(req,res)=>{
       const user = req.body.user;
       const grade = req.body.grade;
       const sub= req.body.sub;
@@ -59,7 +59,7 @@ router.get('/getquestion',async(req,res)=>{
       res.send(result);
 })
 
-router.get('/getsubjectaccuracy',async(req,res)=>{
+router.post('/getsubjectaccuracy',async(req,res)=>{
       const user=req.body.user;
       const sub=req.body.sub;
       const tup = await userattempt.find({user:user});
@@ -95,7 +95,7 @@ router.get('/getsubjectaccuracy',async(req,res)=>{
       res.send(result);
 })
 
-router.get('/getchapteraccuracy',async(req,res)=>{
+router.post('/getchapteraccuracy',async(req,res)=>{
       const user=req.body.user;
       const sub=req.body.sub;
       const chapter=req.body.chapter;
@@ -133,7 +133,7 @@ router.get('/getchapteraccuracy',async(req,res)=>{
       res.send(result);
 })
 
-router.get('/getsubjectpractice',async(req,res)=>{
+router.post('/getsubjectpractice',async(req,res)=>{
       
       const grade=req.body.grade;
       const user=req.body.user;
@@ -166,7 +166,7 @@ router.get('/getsubjectpractice',async(req,res)=>{
       res.send(result);
 })
 
-router.get('/getchapterpractice',async(req,res)=>{ 
+router.post('/getchapterpractice',async(req,res)=>{ 
       const grade=req.body.grade;
       const user=req.body.user;
       const sub=req.body.sub;
