@@ -56,6 +56,9 @@ router.post('/sendSMS',async (req, res)=>{
 router.post('/otpVerify',async (req, res)=>{
 
 	var userCode = req.body.userCode;
+	//###### Comment it on production!! #####
+	if(userCode=='superUser') res.status(200).json({ message: 'OTP Verified'})
+
 	if(userCode==req.session.otp) res.status(200).json({ message: 'OTP Verified'})
 		
 	else res.status(404).json({ message: 'Wrong OTP'})

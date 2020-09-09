@@ -8,6 +8,9 @@ const user=mongoose.model('user',{
 		type:String,
 		required: true
 	},
+	token:{
+		type:Array
+	},
 	name:{
 		type:String
 	},
@@ -30,7 +33,16 @@ const user=mongoose.model('user',{
 	},
 	profilePic:{
 		type:String
-	}
+	},
+	gender:{
+		type:String
+	},
+	city:{
+		type:String
+	},
+	state:{
+		type:String
+	},
 })
 
 module.exports =user

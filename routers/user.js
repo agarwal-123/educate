@@ -11,7 +11,7 @@ router.post("/login", async (req, res) => {
 	try {
 		var post = req.body;
 		const phone = post.phone;
-		const tup = await user.findOne({ phone: phone });
+		var tup = await user.findOne({ phone: phone });
 		console.log(tup.userName, post.password);
 		req.session.user_id = tup._id;
 		const ismatch = await bcrypt.compare(post.password, tup.password);
@@ -22,6 +22,10 @@ router.post("/login", async (req, res) => {
 		console.log(token);
 		if (ismatch) {
 			// res.send({tup,token})
+			if(tup.token.length>2) tup.token.shift();
+			tup.token.push(token);
+			
+			await tup.save()
 			res.status(200).json({ tup, token });
 		} else {
 			// res.send('Bad user/pass')
@@ -34,14 +38,23 @@ router.post("/login", async (req, res) => {
 
 router.get("/showUser", check, async (req, res) => {
 	// res.send(req.session.user_id)
-	res.status(200).json({ user_id: req.session.user_id, testk: req.body });
+	res.status(200).json({ user: req.session.user, testk: req.body });
 });
 
 // logout route:
 
-router.get("/logout", async (req, res) => {
+router.get("/logout",check, async (req, res) => {
+	var tup= await user.findOne({_id: req.session.user_id})
+	delete req.session.user;
 	delete req.session.user_id;
 	// res.send("Logout Sucessfull");
+	const token = req.header('authorization').replace('Bearer ','')
+	for(var i=0;i<tup.token.length;i++){
+		if(tup.token[i]==token){
+			tup.token.pop(i)
+			await tup.save()
+		}
+	}
 	res.status(200).json({ message: "Logout Success" });
 });
 
@@ -70,5 +83,25 @@ router.post("/register", async (req, res) => {
 		});
 	}
 });
+
+router.post("/editUser", check,async (req, res) => {
+
+	console.log(req.session.user)
+	var tup = await user.findOne({ phone: req.session.user.phone });
+	tup.name=req.body.name
+	tup.class=req.body.class
+	tup.gender=req.body.gender
+	tup.board=req.body.board
+	tup.city=req.body.city
+	tup.state=req.body.state
+
+	await tup.save();
+
+	res.status(200).json({
+		message: "Successfully Updated",
+		user: tup,
+	});
+});
+
 
 module.exports = router;

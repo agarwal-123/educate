@@ -1,4 +1,5 @@
 var express = require("express")
+var cors= require("cors")
 require('./db/mongoose')
 
 const user=require('./models/user')
@@ -9,13 +10,7 @@ const app=express()
 const port=process.env.PORT || 3000
 
 //cors
-app.all('*', function(req, res, next) {
-     var origin = req.get('origin'); 
-     res.header('Access-Control-Allow-Origin', origin);
-     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-     res.header('Access-Control-Allow-Headers', 'Content-Type');
-     next();
-});
+app.use(cors())
 
 
 app.use(express.json())
@@ -48,6 +43,9 @@ app.use(chat)
 
 const userAttempt= require('./routers/userAttempt');
 app.use(userAttempt)
+
+const videoTracker= require('./routers/videoTracker');
+app.use(videoTracker)
 
 app.listen(port,function(){
   console.log("Started on PORT 3000");
