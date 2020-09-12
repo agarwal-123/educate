@@ -1,7 +1,8 @@
 var express = require("express")
 var cors= require("cors")
 require('./db/mongoose')
-
+// import {SECRET_SESSION_KEY} from './SECRET_KEYS'
+const {SECRET_SESSION_KEY}= require('./SECRET_KEYS')
 
 const app=express()
 const port=process.env.PORT || 3000
@@ -13,7 +14,7 @@ app.use(cors())
 app.use(express.json())
 
 var session=require('express-session')
-app.use(session({secret: "Shh, its a secret!"}));
+app.use(session({secret: SECRET_SESSION_KEY}));
 
 
 const userRouter = require('./routers/user')
