@@ -5,3 +5,5 @@ module.exports = {
     SECRET_TOKEN_KEY,
     SECRET_SESSION_KEY
   }
+
+// To be removed in real deployment
