@@ -2,6 +2,8 @@ const express = require("express")
 const user = require("../models/user")
 const check = require("../middlewares/middleware")
 const router = new express.Router()
+const {SECRET_TOKEN_KEY}= require('../SECRET_KEYS')
+
 
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
@@ -17,7 +19,7 @@ router.post("/login", async (req, res) => {
 		const ismatch = await bcrypt.compare(post.password, tup.password)
 
 		//Token Generation and Sending
-		const token = jwt.sign({ _id: tup._id.toString() }, "aSecretKey")
+		const token = jwt.sign({ _id: tup._id.toString() }, SECRET_TOKEN_KEY)
 		if (ismatch) {
 			// If credentials are valid, store it.
 			// Only three devices are allowed to login at a time, if 3 already logged in replace the new one with the oldest one. 
@@ -74,7 +76,7 @@ router.post("/register", async (req, res) => {
 		var itm = new user(req.body)
 		
 		//Generating a new token and storing it to token array
-		const token = jwt.sign({ _id: itm._id.toString() }, "aSecretKey")
+		const token = jwt.sign({ _id: itm._id.toString() }, SECRET_TOKEN_KEY)
 
 		itm.token.push(token)
 		await itm.save()
