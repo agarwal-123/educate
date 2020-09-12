@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const user=mongoose.model('user',{
 	userName:{
 		type:String,
-		required: true
 	},
 	password:{
 		type:String,
@@ -18,12 +17,11 @@ const user=mongoose.model('user',{
 	//1 unpaid , 2 for paid
 	level:{
 		type:Number,
-		// required: true,
-
 	},
 	phone:{
 		type:String,
-		// required: true
+		required: true
+
 	},
 	class:{
 		type:Number

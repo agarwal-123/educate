@@ -17,11 +17,7 @@ const sendSMS = (to,random_otp) => {
 	// Create new twilio client
 
 	const client = new twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-
-
 	var body="Your One Time Password for E-Learning is: "+random_otp
-	// random_otp=int(random_otp)
-	console.log("edeeeeededededededededede")
 	return new Promise((success, fail) => {
 	// Send the text message.
 		client.messages.create(
@@ -37,17 +33,17 @@ const sendSMS = (to,random_otp) => {
 		      success({ to, body })
 		    }
 		  }
-		).then(message => console.log(message.sid,random_otp));
+		).then(message => console.log(message.sid,random_otp))
 	})
 }
 
 
 router.post('/sendSMS',async (req, res)=>{
 
-	var to = req.body.to;
-	var random_otp=("" + Math.random()).substring(2, 8);
-	req.session.otp=random_otp;
-	console.log("yeee",req.session.otp)
+	var to = req.body.to
+	// Generating a random number, storing it to database and sending it to user as otp
+	var random_otp=("" + Math.random()).substring(2, 8)
+	req.session.otp=random_otp
 	sendSMS(to,random_otp).then(res.json({ message:'OTP Sent'}))
 
 })
@@ -55,7 +51,7 @@ router.post('/sendSMS',async (req, res)=>{
 
 router.post('/otpVerify',async (req, res)=>{
 
-	var userCode = req.body.userCode;
+	var userCode = req.body.userCode
 	//###### Comment it on production!! #####
 	if(userCode=='superUser') res.status(200).json({ message: 'OTP Verified'})
 
@@ -63,10 +59,9 @@ router.post('/otpVerify',async (req, res)=>{
 		
 	else res.status(404).json({ message: 'Wrong OTP'})
 
-
 })
 
 
 
 
-module.exports = router;
+module.exports = router
